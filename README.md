@@ -1,6 +1,8 @@
 ## Pop3
 This class aims to be a simple way to read a POP3 mailbox.
 
+Most of this code was pulled from the set of functions found in this php.net comment: http://www.php.net/manual/en/book.imap.php#96414
+
 ### Required setup
 In the `require` key of `composer.json` file add the following
 

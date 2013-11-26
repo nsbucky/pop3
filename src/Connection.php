@@ -68,7 +68,7 @@ class Connection
         }
 
         $ssl        = $this->useSSL ? null : "/novalidate-cert";
-        $mailbox    = sprintf( "{%s:%d/pop3%s}%s", $this->host, $this->port, $this->ssl, $this->folder );
+        $mailbox    = sprintf( "{%s:%d/pop3%s}%s", $this->host, $this->port, $ssl, $this->folder );
         $connection = imap_open( $mailbox, $this->user, $this->password );
 
         if( $connection === false ) {
