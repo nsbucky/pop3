@@ -7,15 +7,15 @@ In the `require` key of `composer.json` file add the following
     "nsbucky/pop3": "dev-master"
 
 ## Example
-    $pop3 = new \Pop3\Pop3($host, $user, $password);
+    $pop3 = new \Pop3\Connection($host, $user, $password);
 
     try {
-        $pop3->connect();
 
         $messages = $pop3->listMessages();
 
+        // each message will be instance of Pop3\Message
         foreach( $messages as $messageNumber => $message ) {
-            echo "<pre>" . print_r($message, true) . "</pre>";
+            echo "<pre>" . print_r( get_object_vars($message), true) . "</pre>";
 
             /*
             prints an array that looks something like this:
@@ -41,12 +41,7 @@ In the `require` key of `composer.json` file add the following
             */
 
             // fetch body of message
-            $msg = $pop3->mimeToArray($msgNum, true);
-            if(sizeof($msg) > 1) {
-                $body = (isset($msg["1.1"])) ? $msg["1.1"]["data"] : $msg[1]["data"];
-            } else {
-                $body = $pop3->fetchBody($msgNum);
-            }
+            $body = $message->fetchBody();
         }
 
     } catch( \RuntimeException $e) {
