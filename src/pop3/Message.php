@@ -14,24 +14,52 @@ class Message
     protected $messageNumber;
 
     /**
-     * @var array
+     * @var object
      */
-    protected $data = array();
+    protected $data;
+
+    /**
+     * @var object
+     */
+    protected $headers;
 
     /**
      * @param Connection $connection
      * @param $messageNumber
-     * @param array $data
+     * @param array|object $data
      */
-    public function __construct( Connection $connection, $messageNumber, array $data )
+    public function __construct( Connection $connection, $messageNumber, $data )
     {
         $this->connection    = $connection->connect();
         $this->messageNumber = $messageNumber;
         $this->data          = $data;
 
-        foreach( $data as $d ) {
-            $this->$d = $d;
+        foreach( $data as $key=>$value ) {
+            $this->$key = $value;
         }
+
+        // get headers for this message
+        $this->headers = $this->fetchHeaders();
+    }
+
+    /**
+     * @param string $key
+     * @return mixed
+     */
+    public function getHeader( $key )
+    {
+        if( is_object( $this->headers )
+            && isset( $this->headers->$key ) ) {
+            return $this->headers->$key;
+        }
+
+        $this->headers = $this->fetchHeaders();
+
+        if( isset( $this->headers->$key ) ) {
+            return $this->headers->$key;
+        }
+
+        return null;
     }
 
     /**
