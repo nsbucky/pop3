@@ -115,7 +115,7 @@ class Message
     public function mimeToArray( $parseHeaders = false )
     {
         $mail = imap_fetchstructure( $this->connection, $this->messageNumber );
-        $mail = $this->getParts( $this->messageNumber, $mail, 0 );
+        $mail = $this->getParts( $mail, 0 );
 
         if( $parseHeaders ) {
             $mail[0]["parsed"] = $this->parseHeaders( $mail[0]["data"] );
@@ -135,13 +135,13 @@ class Message
     public function getParts( $part, $prefix )
     {
         $attachments          = array();
-        $attachments[$prefix] = $this->decodePart( $this->messageNumber, $part, $prefix );
+        $attachments[$prefix] = $this->decodePart( $part, $prefix );
 
         // multi-part
         if( isset( $part->parts ) ) {
             $prefix = ( $prefix ) ? $prefix . "." : "";
             foreach( $part->parts as $number => $subpart ) {
-                $attachments = array_merge( $attachments, $this->getParts( $this->messageNumber, $subpart, $prefix . ( $number + 1 ) ) );
+                $attachments = array_merge( $attachments, $this->getParts( $subpart, $prefix . ( $number + 1 ) ) );
             }
         }
 
