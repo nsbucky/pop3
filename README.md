@@ -24,8 +24,8 @@ In the `require` key of `composer.json` file add the following
             Array
             (
                 [subject] => sample message
-                [from] => Your Mom <yourmom@herdomain.com>
-                [to] => mrpickles@hardbears.com
+                [from] => Jane Doe <janedoe@somedomain.com>
+                [to] => johndoe@anotherdomain.com
                 [date] => Thu, 20 Sep 2012 09:01:51 -0700
                 [message_id] => <CABieW=+W2Xvb6M+mkpDn8JU-R_6c0jkJAe3==AQLDvR7C8z1Ug@mail.gm
             ail.com>
